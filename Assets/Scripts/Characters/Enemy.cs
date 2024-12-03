@@ -1,18 +1,17 @@
 using UnityEngine;
 using System.Collections;
 
-public class Enemy : MonoBehaviour
+public class Enemy : CharacterBase
 {
     public int Damage = 10;                
     public float DamageCooldown = 1.0f; 
-    public float MoveSpeed = 3f;          
     public Transform Player;              
-
-    private bool isPlayerInRange = false;  
+    
     private Coroutine damageCoroutine;    
 
     private void Start()
     {
+        MoveSpeed = 1f;
         if (Player == null)
         {
             Player = GameObject.FindWithTag("Player").transform;  
@@ -21,17 +20,14 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (isPlayerInRange)
-        {
-            MoveTowardPlayer();
-        }
+       
+        MoveTowardPlayer();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerInRange = true;
             if (damageCoroutine == null)    
             {
                 damageCoroutine = StartCoroutine(DamagePlayer(other.gameObject.GetComponent<IDamagable>()));
@@ -43,7 +39,6 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerInRange = false;
             if (damageCoroutine != null)
             {
                 StopCoroutine(damageCoroutine);
@@ -54,13 +49,16 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator DamagePlayer(IDamagable player)
     {
-        while (isPlayerInRange)
+        while(true)
         {
             player.TakeDamage(Damage);  
-            yield return new WaitForSeconds(DamageCooldown);     
+            yield return new WaitForSeconds(DamageCooldown); 
         }
+            
     }
-
+    public override void Attack()
+    {
+    }
     private void MoveTowardPlayer()
     {
         if (Player != null)
