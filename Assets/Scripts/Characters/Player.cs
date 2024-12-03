@@ -1,11 +1,15 @@
 using UnityEngine;
+using System.Collections;
 
 public class Player : CharacterBase
 {
-    public Joystick MovementJoystick;  
-    public Joystick AttackJoystick;   
-    public GameObject BulletPrefab;    
-    public Transform BulletSpawnPoint; 
+    public Joystick MovementJoystick;
+    public Joystick AttackJoystick;
+    public GameObject BulletPrefab;
+    public Transform BulletSpawnPoint;
+    public float FireRate = 0.5f;  
+
+    private Coroutine shootingCoroutine; 
 
     private void Update()
     {
@@ -16,17 +20,34 @@ public class Player : CharacterBase
     private void HandleMovement()
     {
         Vector2 moveInput = new Vector2(MovementJoystick.Horizontal, MovementJoystick.Vertical);
-        if (moveInput.magnitude > 0.1f)
-        {
-            Move(moveInput);
-        }
+        Move(moveInput);
     }
 
     private void HandleAttack()
     {
         if (AttackJoystick.Horizontal != 0 || AttackJoystick.Vertical != 0)
         {
+            if (shootingCoroutine == null)
+            {
+                shootingCoroutine = StartCoroutine(ShootContinuously());
+            }
+        }
+        else
+        {
+            if (shootingCoroutine != null)
+            {
+                StopCoroutine(shootingCoroutine);
+                shootingCoroutine = null;
+            }
+        }
+    }
+
+    private IEnumerator ShootContinuously()
+    {
+        while (true)
+        {
             Attack();
+            yield return new WaitForSeconds(FireRate);
         }
     }
 
@@ -38,10 +59,6 @@ public class Player : CharacterBase
 
     private void ShootBullet(Vector2 direction)
     {
-        GameObject bullet = Instantiate(BulletPrefab, BulletSpawnPoint.position, Quaternion.identity);
-
-        // bullet.GetComponent<Bullet>().Initialize(direction);
-
-        Debug.Log($"Bullet shot in direction: {direction}");
+        Instantiate(BulletPrefab, BulletSpawnPoint.position, Quaternion.identity).GetComponent<Bullet>().Initialize(direction);
     }
 }
