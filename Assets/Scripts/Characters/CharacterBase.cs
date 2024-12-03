@@ -5,7 +5,11 @@ public abstract class CharacterBase : MonoBehaviour, ICharacter
     [Header("Character Settings")]
     public float Health = 100f;
     public float MoveSpeed = 5f;
-
+    public Animator _Animator;
+    void Awake ()
+    {
+        _Animator = GetComponent<Animator>();
+    }
     public virtual void Move(Vector2 direction)
     {
         Vector3 moveDirection = new Vector3(direction.x, direction.y, 0).normalized;
@@ -17,15 +21,12 @@ public abstract class CharacterBase : MonoBehaviour, ICharacter
         Health -= damage;
         if (Health <= 0)
         {
-            Die();
+            Die(_Animator);
         }
     }
 
     public abstract void Attack();
 
-    public virtual void Die()
-    {
-        Debug.Log($"{name} has died.");
-        Destroy(gameObject);
-    }
+    public abstract void Die(Animator anim);
+    
 }

@@ -6,9 +6,8 @@ public class Enemy : CharacterBase
     public int Damage = 10;                
     public float DamageCooldown = 1.0f; 
     public Transform Player;              
-    
-    private Coroutine damageCoroutine;    
-
+    public float StopDistance = 1f; 
+    public GameObject DamageGObj;
     private void Start()
     {
         MoveSpeed = 1f;
@@ -23,49 +22,32 @@ public class Enemy : CharacterBase
        
         MoveTowardPlayer();
     }
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public override void Die(Animator anim)
     {
-        if (other.CompareTag("Player"))
-        {
-            if (damageCoroutine == null)    
-            {
-                damageCoroutine = StartCoroutine(DamagePlayer(other.gameObject.GetComponent<IDamagable>()));
-            }
-        }
+        Debug.Log($"{name} has died.");
+        _Animator.SetTrigger("Die");
+        StartCoroutine(iDie());
+       
     }
-
-    private void OnTriggerExit2D(Collider2D other)
+    IEnumerator iDie()
     {
-        if (other.CompareTag("Player"))
-        {
-            if (damageCoroutine != null)
-            {
-                StopCoroutine(damageCoroutine);
-                damageCoroutine = null;   
-            }
-        }
-    }
-
-    private IEnumerator DamagePlayer(IDamagable player)
-    {
-        while(true)
-        {
-            player.TakeDamage(Damage);  
-            yield return new WaitForSeconds(DamageCooldown); 
-        }
-            
+        Destroy(DamageGObj);
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
     }
     public override void Attack()
     {
     }
-    private void MoveTowardPlayer()
+     private void MoveTowardPlayer()
     {
         if (Player != null)
         {
             Vector2 direction = (Player.position - transform.position).normalized;
 
-            transform.position = Vector2.MoveTowards(transform.position, Player.position, MoveSpeed * Time.deltaTime);
+            float distanceToPlayer = Vector2.Distance(transform.position, Player.position);
+
+            if (distanceToPlayer > StopDistance)
+                transform.position = Vector2.MoveTowards(transform.position, Player.position, MoveSpeed * Time.deltaTime);
         }
     }
 }

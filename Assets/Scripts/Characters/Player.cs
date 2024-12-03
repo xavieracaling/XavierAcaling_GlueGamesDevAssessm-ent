@@ -50,7 +50,17 @@ public class Player : CharacterBase
             yield return new WaitForSeconds(FireRate);
         }
     }
-
+    public override void Die(Animator anim)
+    {
+        Debug.Log($"{name} has died.");
+        _Animator.SetTrigger("Die");
+        StartCoroutine(iDie());
+    }
+    IEnumerator iDie()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
+    }
     public override void Attack()
     {
         Vector2 attackDirection = new Vector2(AttackJoystick.Horizontal, AttackJoystick.Vertical).normalized;

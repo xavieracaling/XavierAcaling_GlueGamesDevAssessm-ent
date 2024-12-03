@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float Speed = 10f;      
+    public float Speed = 300;      
     private Vector2 direction;      
 
     public void Initialize(Vector2 shootDirection)
@@ -27,7 +27,8 @@ public class Bullet : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<IDamagable>().TakeDamage(Random.Range(8,10));
+            EffectManager.Instance.PlayBulletEffect(transform.position);
+            collision.transform.parent.GetComponent<IDamagable>().TakeDamage(Random.Range(8,10));
             Destroy(gameObject);           
         }
     }
