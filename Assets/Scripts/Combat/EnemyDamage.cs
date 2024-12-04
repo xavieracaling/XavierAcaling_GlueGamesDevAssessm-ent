@@ -13,7 +13,7 @@ public class EnemyDamage : MonoBehaviour
         {
             if (damageCoroutine == null)    
             {
-                damageCoroutine = StartCoroutine(DamagePlayer(other.gameObject.GetComponent<IDamagable>()));
+                damageCoroutine = StartCoroutine(DamagePlayer(other.gameObject.GetComponent<IDamagable>(),other.gameObject.transform));
             }
         }
     }
@@ -30,13 +30,14 @@ public class EnemyDamage : MonoBehaviour
         }
     }
 
-    private IEnumerator DamagePlayer(IDamagable player)
+    private IEnumerator DamagePlayer(IDamagable player, Transform playerPos)
     {
         while(true)
         {
-            player.TakeDamage(Damage);  
+            player.TakeDamage(Damage, ()=> {
+                EffectManager.Instance.PlayPlayerHitEffect(playerPos.position);
+            });  
             yield return new WaitForSeconds(DamageCooldown); 
         }
-            
     }
 }

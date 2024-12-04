@@ -28,7 +28,7 @@ public class Bullet : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             EffectManager.Instance.PlayBulletEffect(transform.position);
-            collision.transform.parent.GetComponent<IDamagable>().TakeDamage(Random.Range(8,10));
+            collision.transform.parent.GetComponent<IDamagable>().TakeDamage(Random.Range(8,10),null);
             Destroy(gameObject);           
         }
     }

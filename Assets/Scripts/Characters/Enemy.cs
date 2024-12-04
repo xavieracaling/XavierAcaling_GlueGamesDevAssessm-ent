@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class Enemy : CharacterBase
 {
@@ -23,6 +24,8 @@ public class Enemy : CharacterBase
     }
     public override void Die(Animator anim)
     {
+        GameManager.Instance.UpdateKillCount();
+        EffectManager.Instance.PlayDeadEffect(transform.position);
         Dead = true;
         Debug.Log($"{name} has died.");
         _Animator.SetTrigger("Die");

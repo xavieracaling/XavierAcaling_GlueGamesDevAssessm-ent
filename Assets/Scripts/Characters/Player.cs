@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class Player : CharacterBase
 {
@@ -54,6 +55,7 @@ public class Player : CharacterBase
     public override void Die(Animator anim)
     {
         Dead = true;
+        EffectManager.Instance.PlayDeadEffect(transform.position);
         Debug.Log($"{name} has died.");
         _Animator.SetTrigger("Die");
         StartCoroutine(iDie());
@@ -61,6 +63,7 @@ public class Player : CharacterBase
     IEnumerator iDie()
     {
         yield return new WaitForSeconds(2f);
+        GameManager.Instance.Result(false);
         Destroy(gameObject);
     }
     public override void Attack()

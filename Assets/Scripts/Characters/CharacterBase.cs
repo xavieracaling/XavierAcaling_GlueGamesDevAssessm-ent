@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class CharacterBase : MonoBehaviour, ICharacter
@@ -18,8 +19,11 @@ public abstract class CharacterBase : MonoBehaviour, ICharacter
         transform.position += moveDirection * MoveSpeed * Time.deltaTime;
     }
     
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage, Action hitFX)
     {
+        if(Dead) return;
+        if(hitFX != null)
+            hitFX?.Invoke();
         Health -= damage;
         HealthBar.BarValue = Health;
         if (Health <= 0)
