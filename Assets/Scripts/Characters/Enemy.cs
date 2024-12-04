@@ -42,7 +42,7 @@ public class Enemy : CharacterBase
     }
     private void MoveTowardPlayer()
     {
-        if(Dead) return;
+        if(Dead || GameManager.Instance.EndGame) return;
 
         if (Player != null)
         {

@@ -15,6 +15,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
+        if(GameManager.Instance.EndGame) return;
         Vector2 spawnPosition;
 
         do

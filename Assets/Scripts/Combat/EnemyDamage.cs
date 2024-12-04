@@ -32,8 +32,11 @@ public class EnemyDamage : MonoBehaviour
 
     private IEnumerator DamagePlayer(IDamagable player, Transform playerPos)
     {
+        
         while(true)
         {
+            if(GameManager.Instance.EndGame) yield break;
+
             player.TakeDamage(Damage, ()=> {
                 EffectManager.Instance.PlayPlayerHitEffect(playerPos.position);
             });  

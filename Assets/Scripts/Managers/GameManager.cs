@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI ResultUI;
     public GameObject PanelResult;
     public int KillCount;
+    public bool EndGame;
     public void RestartGame () => SceneManager.LoadScene(0);
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
     }
     public void Result(bool win)
     {
+        EndGame = true;
         PanelResult.SetActive(true);
         if(win)
         {
