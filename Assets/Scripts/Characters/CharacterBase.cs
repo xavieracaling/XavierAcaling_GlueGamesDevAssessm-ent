@@ -5,7 +5,9 @@ public abstract class CharacterBase : MonoBehaviour, ICharacter
     [Header("Character Settings")]
     public float Health = 100f;
     public float MoveSpeed = 5f;
+    public bool Dead;
     public Animator _Animator;
+    public ProgressBar HealthBar;
     void Awake ()
     {
         _Animator = GetComponent<Animator>();
@@ -19,6 +21,7 @@ public abstract class CharacterBase : MonoBehaviour, ICharacter
     public virtual void TakeDamage(float damage)
     {
         Health -= damage;
+        HealthBar.BarValue = Health;
         if (Health <= 0)
         {
             Die(_Animator);

@@ -42,7 +42,7 @@ public class ProgressBar : MonoBehaviour
             value = Mathf.Clamp(value, 0, 100);
             barValue = value;
             UpdateValue(barValue);
-
+            
         }
     }
 
@@ -67,9 +67,9 @@ public class ProgressBar : MonoBehaviour
         bar.color = BarColor;
         barBackground.color = BarBackGroundColor; 
         barBackground.sprite = BarBackGroundSprite;
-
-        UpdateValue(barValue);
-
+        BarValue = 100;
+       // UpdateValue(barValue);
+        
 
     }
 
@@ -92,26 +92,26 @@ public class ProgressBar : MonoBehaviour
 
     private void Update()
     {
-        if (!Application.isPlaying)
-        {           
-            UpdateValue(50);
-            txtTitle.color = TitleColor;
-            txtTitle.font = TitleFont;
-            txtTitle.fontSize = TitleFontSize;
+        // if (!Application.isPlaying)
+        // {           
+        //     UpdateValue(50);
+        //     txtTitle.color = TitleColor;
+        //     txtTitle.font = TitleFont;
+        //     txtTitle.fontSize = TitleFontSize;
 
-            bar.color = BarColor;
-            barBackground.color = BarBackGroundColor;
+        //     bar.color = BarColor;
+        //     barBackground.color = BarBackGroundColor;
 
-            barBackground.sprite = BarBackGroundSprite;           
-        }
-        else
-        {
-            if (Alert >= barValue && Time.time > nextPlay)
-            {
-                nextPlay = Time.time + RepeatRate;
-                audiosource.PlayOneShot(sound);
-            }
-        }
+        //     barBackground.sprite = BarBackGroundSprite;           
+        // }
+        // else
+        // {
+        //     if (Alert >= barValue && Time.time > nextPlay)
+        //     {
+        //         nextPlay = Time.time + RepeatRate;
+        //         audiosource.PlayOneShot(sound);
+        //     }
+        // }
     }
 
 }

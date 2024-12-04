@@ -10,9 +10,11 @@ public class EffectManager : MonoBehaviour
             Instance = this;
     }
 
-    public void PlayBulletEffect(Vector3 position)
+    public void PlayBulletEffect(Vector3 position) => instantiateEffect(Impact,position);
+    
+    void instantiateEffect(GameObject effecx,Vector3 position)
     {
-        GameObject fx = Instantiate(Impact);
+        GameObject fx = Instantiate(effecx);
         fx.transform.position = position;
     }
 }

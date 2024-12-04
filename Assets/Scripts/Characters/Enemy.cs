@@ -19,15 +19,14 @@ public class Enemy : CharacterBase
 
     private void Update()
     {
-       
         MoveTowardPlayer();
     }
     public override void Die(Animator anim)
     {
+        Dead = true;
         Debug.Log($"{name} has died.");
         _Animator.SetTrigger("Die");
         StartCoroutine(iDie());
-       
     }
     IEnumerator iDie()
     {
@@ -38,8 +37,10 @@ public class Enemy : CharacterBase
     public override void Attack()
     {
     }
-     private void MoveTowardPlayer()
+    private void MoveTowardPlayer()
     {
+        if(Dead) return;
+
         if (Player != null)
         {
             Vector2 direction = (Player.position - transform.position).normalized;
@@ -48,6 +49,7 @@ public class Enemy : CharacterBase
 
             if (distanceToPlayer > StopDistance)
                 transform.position = Vector2.MoveTowards(transform.position, Player.position, MoveSpeed * Time.deltaTime);
+            transform.localPosition = new Vector3(transform.localPosition.x,transform.localPosition.y,0);
         }
     }
 }

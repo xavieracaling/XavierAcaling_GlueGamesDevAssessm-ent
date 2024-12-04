@@ -19,6 +19,7 @@ public class Player : CharacterBase
 
     private void HandleMovement()
     {
+        if(Dead) return;
         Vector2 moveInput = new Vector2(MovementJoystick.Horizontal, MovementJoystick.Vertical);
         Move(moveInput);
     }
@@ -52,6 +53,7 @@ public class Player : CharacterBase
     }
     public override void Die(Animator anim)
     {
+        Dead = true;
         Debug.Log($"{name} has died.");
         _Animator.SetTrigger("Die");
         StartCoroutine(iDie());
