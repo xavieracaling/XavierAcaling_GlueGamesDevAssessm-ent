@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -5,11 +6,20 @@ public class Bullet : MonoBehaviour
     public float Speed = 300;      
     private Vector2 direction;      
 
+    Coroutine Cdisappear;
+
     public void Initialize(Vector2 shootDirection)
     {
         direction = shootDirection.normalized;
         RotateBullet(direction);
-        Destroy(gameObject, 5f); 
+        if(Cdisappear != null)
+            StopCoroutine(Cdisappear);
+        Cdisappear = StartCoroutine(disappear());
+    }
+    IEnumerator disappear()
+    {
+        yield return new WaitForSeconds(1.5f);
+        gameObject.SetActive(false);
     }
 
     private void Update()
@@ -29,7 +39,9 @@ public class Bullet : MonoBehaviour
         {
             EffectManager.Instance.PlayBulletEffect(transform.position);
             collision.transform.parent.GetComponent<IDamagable>().TakeDamage(Random.Range(8,10),null);
-            Destroy(gameObject);           
+            if(Cdisappear != null)
+                StopCoroutine(Cdisappear);
+            gameObject.SetActive(false);
         }
     }
 }

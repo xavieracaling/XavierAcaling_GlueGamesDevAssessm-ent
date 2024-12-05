@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
             spawnPosition = (Vector2)Player.position + randomDirection * randomDistance;
         }
         while (Vector2.Distance(spawnPosition, Player.position) < MinSpawnDistance); 
-
+        
         Instantiate(EnemyPrefab, spawnPosition,Quaternion.identity, GameContainer);
     }
 }

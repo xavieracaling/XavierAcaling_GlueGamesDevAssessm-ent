@@ -6,8 +6,6 @@ public class Player : CharacterBase
 {
     public Joystick MovementJoystick;
     public Joystick AttackJoystick;
-    public GameObject BulletPrefab;
-    public Transform BulletSpawnPoint;
     public float FireRate = 0.5f;  
 
     private Coroutine shootingCoroutine; 
@@ -69,11 +67,8 @@ public class Player : CharacterBase
     public override void Attack()
     {
         Vector2 attackDirection = new Vector2(AttackJoystick.Horizontal, AttackJoystick.Vertical).normalized;
-        ShootBullet(attackDirection);
+        GameManager.Instance.GetAvailableBullet(attackDirection);
     }
 
-    private void ShootBullet(Vector2 direction)
-    {
-        Instantiate(BulletPrefab, BulletSpawnPoint.position, Quaternion.identity).GetComponent<Bullet>().Initialize(direction);
-    }
+    
 }

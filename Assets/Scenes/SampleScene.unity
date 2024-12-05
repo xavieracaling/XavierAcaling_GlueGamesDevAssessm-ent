@@ -448,7 +448,11 @@ MonoBehaviour:
   KillCountResult2UI: {fileID: 1752758864}
   ResultUI: {fileID: 1807974967}
   PanelResult: {fileID: 1070945133}
+  BulletPrefab: {fileID: 344903650261130380, guid: de3666d20da9d1f4c986fc4828aa05f1, type: 3}
+  BulletSpawnPoint: {fileID: 1541907534}
+  PoolingContainer: {fileID: 1368833370}
   KillCount: 0
+  EndGame: 0
 --- !u!1001 &268050448
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1899,6 +1903,7 @@ Transform:
   m_Children:
   - {fileID: 1939954093}
   - {fileID: 1576683138}
+  - {fileID: 1368833370}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1201392876
@@ -2281,6 +2286,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1368833369
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1368833370}
+  m_Layer: 0
+  m_Name: Pooling
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1368833370
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368833369}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1125381304}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1402283924
 GameObject:
   m_ObjectHideFlags: 0
@@ -2536,8 +2572,6 @@ MonoBehaviour:
   HealthBar: {fileID: 1448167471}
   MovementJoystick: {fileID: 1201392878}
   AttackJoystick: {fileID: 268050450}
-  BulletPrefab: {fileID: 344903650261130380, guid: de3666d20da9d1f4c986fc4828aa05f1, type: 3}
-  BulletSpawnPoint: {fileID: 1541907534}
   FireRate: 0.2
 --- !u!61 &1576683141
 BoxCollider2D:
